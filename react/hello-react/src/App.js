@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
-import ValidationSample from './ValidationSample.js';
-import ScrollBox from './ScrollBox.js';
+import ValidationSample from './Ch5/ValidationSample.js';
+import ScrollBox from './Ch5/ScrollBox.js';
+import IterationSample from './Ch6/IterationSample.js';
 
 class App extends Component {
   render() {
     return (
       <div>
+        <h4>Ch 5</h4>
         <ValidationSample />
         <br/>
         <ScrollBox ref={(ref) => { this.scrollBox = ref }} />
         <button onClick={() => this.scrollBox.scrollToBottom()}>
           To the bottom
         </button>
+        <br/>
+        <h4>Ch 6</h4>
+        <IterationSample />
       </div>
     );
   }
