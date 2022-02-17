@@ -1,9 +1,25 @@
 import React, { Component } from 'react';
-import ValidationSample from './Ch5/ValidationSample.js';
-import ScrollBox from './Ch5/ScrollBox.js';
-import IterationSample from './Ch6/IterationSample.js';
+import ValidationSample from './Ch5/ValidationSample';
+import ScrollBox from './Ch5/ScrollBox';
+import IterationSample from './Ch6/IterationSample';
+import LifeCycleSample from './Ch7/LifeCycleSample';
+import ErrorBoundary from './Ch7/ErrorBoundary';
+
+function getRandomColor() {
+  return "#" + Math.floor(Math.random() * 16777215).toString(16);
+}
 
 class App extends Component {
+  state = {
+    color: '#000000',
+  };
+
+  handleClick = () => {
+    this.setState({
+      color: getRandomColor(),
+    });
+  }
+
   render() {
     return (
       <div>
@@ -17,6 +33,12 @@ class App extends Component {
         <br/>
         <h4>Ch 6</h4>
         <IterationSample />
+        <br />
+        <h4>Ch 7</h4>
+        <button onClick={this.handleClick}>Randome Color</button>
+        <ErrorBoundary>
+          <LifeCycleSample color={this.state.color} />
+        </ErrorBoundary>
       </div>
     );
   }
