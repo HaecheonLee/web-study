@@ -1,9 +1,19 @@
 import SassComponent from './SassComponent';
+import CSSModule from './CSSModule';
+import StyledComponent from './StyledComponent';
 
 function App() {
   return (
     <div>
-      <SassComponent />
+      <div>
+        <SassComponent />
+      </div>
+      <div>
+        <CSSModule />
+      </div>
+      <div>
+        <StyledComponent />
+      </div>
     </div>
   );
 }
