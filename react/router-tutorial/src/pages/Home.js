@@ -18,6 +18,9 @@ const Home = () => {
         <li>
           <Link to="/profiles/void">Unknown profile</Link>
         </li>
+        <li>
+          <Link to="/articles">List of articles</Link>
+        </li>
       </ul>
     </div>
   )
