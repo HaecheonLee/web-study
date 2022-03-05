@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Fredoka';
+}
+
+section {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100vh;
+  color: black;
+  background: white;
+  padding: 80px max(28%, 100px);
+}
+
+input[type="checkbox"] {
+  position: fixed;
+  z-index: 1;
+  right: 100px;
+  margin: 20px 0 20px auto;
+  -webkit-appearance: none;
+}
+
+input[type="checkbox"]:before {
+  content: 'Dark';
+  color: #fff;
+  background: #000;
+  padding: 10px 20px;
+}
+
+input[type="checkbox"]:checked:before {
+  content: 'Light';
+  color: #000;
+  background: #fff;
+}
+
+input[type="checkbox"]:checked ~ * {
+  filter: invert(1);
+}
+
+section h2 {
+  margin-bottom: 25px;
+}
+
+section img {
+  float: left;
+  max-width: 500px;
+  background-image: url('./bg.jpg');
+  margin: 10px 25px 17.5px 0px;
+  filter: inherit;
+}
+
+p {
+  margin-top: 10px;
+}
