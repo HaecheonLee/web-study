@@ -1,119 +1,89 @@
-import { handleActions } from 'redux-actions';
+import { createAction, handleActions } from 'redux-actions';
+import { call, put, takeLatest } from 'redux-saga/effects';
 import * as api from '../lib/api';
-import createRequestThunk from '../lib/createRequestThunk';
+import { startLoading, finishLoading } from './loading';
+import createRequestSaga from '../lib/createRequestSaga';
 
 // declare action-type
 // each request 3 different action-type
 
 const GET_POST = 'sample/GET_POST';
 const GET_POST_SUCCESS = 'sample/GET_POST_SUCCESS';
-// const GET_POST_FAILURE = 'sample/GET_POST/FAILURE';
+const GET_POST_FAILURE = 'sample/GET_POST_FAILURE';
 
 const GET_USERS = 'sample/GET_USERS';
 const GET_USERS_SUCCESS = 'sample/GET_USERS_SUCCESS';
-// const GET_USERS_FAILURE = 'sample/GET_USERS_FAILURE';
+const GET_USERS_FAILURE = 'sample/GET_USERS_FAILURE';
 
-// thunk function
-// inside thunk function, need to dispatch when start, succeed, fail
-// export const getPost = id => async dispatch => {
-//   dispatch({ type: GET_POST }); // request starts
+export const getPost = createAction(GET_POST, id => id);
+export const getUsers = createAction(GET_USERS);
+
+// function* getPostSaga(action) {
+//   yield put(startLoading(GET_POST));  // start loading
 //
 //   try {
-//     const response = await api.getPost(id);
-//     dispatch({
+//     // call: calling a promise function and can wait for response
+//     const post = yield call(api.getPost, action.payload); // meaning => api.getPost(action.payload)
+//     yield put({
 //       type: GET_POST_SUCCESS,
-//       payload: response.data,
+//       payload: post.data,
 //     });
 //   } catch (e) {
-//     dispatch({
+//     // catch error
+//     yield put({
 //       type: GET_POST_FAILURE,
 //       payload: e,
 //       error: true,
 //     });
-//     throw e;
 //   }
-// };
+//   yield put(finishLoading(GET_POST)); // finish loading
+// }
 //
-// export const getUsers = () => async dispatch => {
-//   dispatch({ type: GET_USERS });
+// function* getUsersSaga() {
+//   yield put(startLoading(GET_USERS));
 //
 //   try {
-//     const response = await api.getUsers();
-//     dispatch({
+//     const users = yield call(api.getUsers);
+//     yield put({
 //       type: GET_USERS_SUCCESS,
-//       payload: response.data,
+//       payload: users.data,
 //     });
 //   } catch (e) {
-//     dispatch({
+//     yield put({
 //       type: GET_USERS_FAILURE,
 //       payload: e,
 //       error: true,
 //     });
-//     throw e;
 //   }
-// };
+//   yield put(finishLoading(GET_USERS));
+// }
 
-export const getPost = createRequestThunk(GET_POST, api.getPost);
-export const getUsers = createRequestThunk(GET_USERS, api.getUsers);
+const getPostSaga = createRequestSaga(GET_POST, api.getPost);
+const getUsersSaga = createRequestSaga(GET_USERS, api.getUsers);
+
+export function* sampleSaga() {
+  yield takeLatest(GET_POST, getPostSaga);
+  yield takeLatest(GET_USERS, getUsersSaga);
+}
 
 // declare initialState
 // loading "object" deals with loading state
 
 const initialState = {
-  // loading: {
-  //   GET_POST: false,
-  //   GET_USERS: false,
-  // },
   post: null,
   users: null,
 };
 
 const sample = handleActions(
   {
-    // [GET_POST]: state => ({
-    //   ...state,
-    //   loading: {
-    //     ...state.loading,
-    //     GET_POST: true, // request starts
-    //   }
-    // }),
     [GET_POST_SUCCESS]: (state, action) => ({
       ...state,
-      // loading: {
-      //   ...state.loading,
-      //   GET_POST: false, // request finishes
-      // },
       post: action.payload,
     }),
-    // [GET_POST_FAILURE]: (state, action) => ({
-    //   ...state,
-    //   loading: {
-    //     ...state.loading,
-    //     GET_POST: false, // request finishes
-    //   }
-    // }),
-    // [GET_USERS]: state => ({
-    //   ...state,
-    //   loading: {
-    //     ...state.loading,
-    //     GET_USERS: true, // request starts
-    //   },
-    // }),
     [GET_USERS_SUCCESS]: (state, action) => ({
       ...state,
-      // loading: {
-      //   ...state.loading,
-      //   GET_USERS: false, // request finishes
-      // },
       users: action.payload,
     }),
-    // [GET_USERS_FAILURE]: (state, action) => ({
-    //   ...state,
-    //   loading: {
-    //     ...state.loading,
-    //     GET_USERS: false, // request finishes
-    //   }
-    // }),
   },
   initialState,
 );
