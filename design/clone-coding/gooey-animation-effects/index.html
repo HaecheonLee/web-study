@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>CSS Gooey Effects</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <section>
+      <div class="gooey">
+        <span id="circle1"></span>
+        <span id="circle2"></span>
+        <span id="circle3"></span>
+        <span id="circle4"></span>
+        <span id="circle5"></span>
+        <span id="circle6"></span>
+      </div>
+    </section>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+    $(function() {
+      $(".gooey span").draggable();
+    });
+  </script>
+  <!-- <script>
+    /* https://www.w3schools.com/howto/howto_js_draggable.asp */
+    const spans = document.querySelectorAll('.gooey span');
+    spans.forEach(x => dragElement(x));
+
+    function dragElement(elem) {
+      let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+      elem.onmousedown = dragMouseDown;
+
+      function dragMouseDown(e) {
+        e = e || window.event;
+        e.preventDefault();
+
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+
+        document.onmouseup = closeDragElement;
+        document.onmousemove = elementDrag;
+      }
+
+      function elementDrag(e) {
+        e = e || window.event;
+        e.preventDefault();
+
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+
+        elem.style.top = (elem.offsetTop - pos2) + "px";
+        elem.style.left = (elem.offsetLeft - pos1) + "px";
+
+        console.log(elem);
+      }
+
+      function closeDragElement() {
+        document.onmouseup = null;
+        document.onmousemove = null;
+      }
+    }
+  </script> -->
+</html>
