@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            #itemText {
+                color: red;
+            }
+
+            .container {
+                margin-bottom: 10px;
+            }
+        </style>
+    </head>
+    <body>
+      <div class="container">
+          <p id="itemText">
+          </p>
+      </div>
+
+      <div class="container">
+          <input id="inputKey" type="text" />
+          <input id="inputValue" type="text" />
+      </div>
+
+      <div class="container">
+          <button type="button" onclick="setLocalStorage()">Set LocalStorage</button>
+          <button type="button" onclick="display(getLocalStorage())">Display LocalStorage</button>
+          <button type="button" onclick="removeLocalStorage()">Remove LocalStorage</button>
+          <button type="button" onclick="clearLocalStorage()">Clear LocalStorage</button>
+      </div>
+
+      <div class="container">
+          <button type="button" onclick="setSessionStorage()">Set SessionStorage</button>
+          <button type="button" onclick="display(getSessionStorage())">Display SessionStorage</button>
+          <button type="button" onclick="removeSessionStorage()">Remove SessionStorage</button>
+          <button type="button" onclick="clearSessionStorage()">Clear SessionStorage</button>
+      </div>
+
+      <div class="container">
+          <button type="button" onclick="setCookie()">Set Cookie</button>
+          <button type="button" onclick="display(getCookie())">Display Cookie</button>
+          <button type="button" onclick="removeCookie()">Remove Cookie</button>
+      </div>
+
+      <script>
+          function display(value) {
+              const p = document.getElementById("itemText");
+              p.innerText = value;
+          }
+
+          function getKey() {
+              return document.getElementById("inputKey").value;
+          }
+
+          function getValue() {
+              return document.getElementById("inputValue").value;
+          }
+
+          function setLocalStorage() {
+              const key = getKey();
+              const value = getValue();
+
+              if (key === "" || value === "") return;
+              window.localStorage.setItem(getKey(), getValue());
+          }
+
+          function getLocalStorage() {
+              return window.localStorage.getItem(getKey());
+          }
+
+          function removeLocalStorage() {
+              const key = getkey();
+              if (key === "") return;
+
+              window.localStorage.removeItem(key);
+          }
+
+          function clearLocalStorage() {
+              window.localStorage.clear();
+          }
+
+          function setSessionStorage() {
+              const key = getKey();
+              const value = getValue();
+
+              if (key === "" || value === "") return;
+              window.sessionStorage.setItem(key, value);
+          }
+
+          function getSessionStorage() {
+              return window.sessionStorage.getItem(getKey());
+          }
+
+          function removeSessionStorage() {
+              const key = getkey();
+              if (key === "") return;
+
+              window.sessionStorage.removeItem(key);
+          }
+
+          function clearSessionStorage() {
+              window.sessionStorage.clear();
+          }
+
+          function setCookie() {
+              const key = getKey();
+              const value = getValue();
+              if (key === "" || value === "") return;
+
+              const expires = new Date();
+              expires.setTime(expires.getTime() + (1000 * 60));
+              document.cookie = `${key}=${value};expires=${expires}`
+          }
+
+          function getCookie() {
+              let cookieText = "";
+
+              if (window.document.cookie != "") {
+                  const splitedArray = window.document.cookie.split(';');
+                  for (each of splitedArray) {
+                      if (each != "") {
+                          cookieText += each;
+                      }
+                  }
+              }
+
+              return cookieText;
+          }
+
+          function removeCookie() {
+              const date = new Date();
+              const key = getkey();
+              if (key === "") return;
+
+              document.cookie = `${key}= ; expires=${date.toUTCString()}`
+          }
+      </script>
+    </body>
+</html>
